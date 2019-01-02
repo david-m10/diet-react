@@ -1,2 +1,1 @@
-"# diet-react" 
-"# diet-react" 
+Diet react application.
