@@ -1,26 +1,22 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
+import { BrowserRouter, Route, Switch } from 'react-router-dom'
+import Header from './Header'
+import DishesList from "./DishesList";
 
-export default class App extends Component {
-    render() {
+class App extends Component {
+    render () {
         return (
-            <div className="container">
-                <div className="row justify-content-center">
-                    <div className="col-md-8">
-                        <div className="card">
-                            <div className="card-header">Fresh React Application</div>
-
-                            <div className="card-body">
-                                I'm an App component!
-                            </div>
-                        </div>
-                    </div>
+            <BrowserRouter>
+                <div>
+                    <Header />
+                    <Switch>
+                        <Route exact path='/' component={DishesList} />
+                    </Switch>
                 </div>
-            </div>
-        );
+            </BrowserRouter>
+        )
     }
 }
 
-if (document.getElementById('app')) {
-    ReactDOM.render(<App />, document.getElementById('app'));
-}
+ReactDOM.render(<App />, document.getElementById('app'));
