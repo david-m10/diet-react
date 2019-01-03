@@ -1,26 +1,14 @@
-import axios from 'axios'
-import React, {Component} from 'react'
-import {Link} from 'react-router-dom'
+import React, {Component} from 'react';
+import {connect} from 'react-redux';
+import {Link} from 'react-router-dom';
+import * as actions from '../../actions/index';
 
 class DishesList extends Component {
-    constructor() {
-        super();
-        this.state = {
-            dishes: []
-        };
-    }
-
     componentDidMount() {
-        axios.get('/api/dishes').then(response => {
-            this.setState({
-                dishes: response.data
-            })
-        });
+        this.props.fetchDishes();
     }
 
     render() {
-        const {dishes} = this.state;
-
         return (
             <div className='container py-4'>
                 <div className='row justify-content-center'>
@@ -28,14 +16,15 @@ class DishesList extends Component {
                         <div className='card'>
                             <div className='card-header'>All dishes</div>
                             <div className='card-body'>
-                                <Link className='btn btn-primary btn-sm mb-3' to='/create'>
+                                <Link className='btn btn-primary btn-sm mb-3' to='/dishes/create'>
                                     Create new dish
                                 </Link>
                                 <ul className='list-group list-group-flush'>
-                                    {dishes.map(dish => (
+                                    {this.props.loading && 'Loading...'}
+                                    {this.props.dishes.map(dish => (
                                         <Link
                                             className='list-group-item list-group-item-action d-flex justify-content-between align-items-center'
-                                            to={`/${dish.id}`}
+                                            to={`dishes/${dish.id}`}
                                             key={dish.id}
                                         >
                                             {dish.name}
@@ -54,4 +43,17 @@ class DishesList extends Component {
     }
 }
 
-export default DishesList;
+const mapStateToProps = state => {
+    return {
+        dishes: state.dishes.dishes,
+        loading: state.dishes.loading
+    };
+};
+
+const mapDispatchToProps = dispatch => {
+    return {
+        fetchDishes: () => dispatch(actions.fetchDishes())
+    };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(DishesList);

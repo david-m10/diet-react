@@ -1,0 +1,3 @@
+export {
+    fetchDishes
+} from './dishes';

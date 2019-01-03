@@ -1,22 +1,20 @@
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 import ReactDOM from 'react-dom';
-import { BrowserRouter, Route, Switch } from 'react-router-dom'
+import {BrowserRouter, Route, Switch} from 'react-router-dom'
 import Header from './Header'
-import DishesList from "./DishesList";
+import DishesList from "./Dishes/DishesIndex";
+import DishesCreate from "./Dishes/DishesCreate";
 
-class App extends Component {
-    render () {
+export default class App extends Component {
+    render() {
         return (
-            <BrowserRouter>
-                <div>
-                    <Header />
-                    <Switch>
-                        <Route exact path='/' component={DishesList} />
-                    </Switch>
-                </div>
-            </BrowserRouter>
+            <div>
+                <Header/>
+                <Switch>
+                    <Route exact path='/' component={DishesList}/>
+                    <Route exact path='/dishes/create' component={DishesCreate}/>
+                </Switch>
+            </div>
         )
     }
 }
-
-ReactDOM.render(<App />, document.getElementById('app'));
