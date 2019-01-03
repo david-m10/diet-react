@@ -1,58 +1,29 @@
-import axios from 'axios'
-import React, {Component} from 'react'
+import React, {Component} from 'react';
+import {connect} from 'react-redux';
+import * as actions from '../../actions/index';
 
-class SingleProject extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            project: {},
-            tasks: []
-        }
-    }
-
+class DishesShow extends Component {
     componentDidMount() {
-        const projectId = this.props.match.params.id;
-
-        axios.get(`/api/projects/${projectId}`).then(response => {
-            this.setState({
-                project: response.data,
-                tasks: response.data.tasks
-            })
-        })
+        this.props.fetchDish(this.props.match.params.id);
     }
 
     render() {
-        const {project, tasks} = this.state;
-
         return (
             <div className='container py-4'>
                 <div className='row justify-content-center'>
                     <div className='col-md-8'>
                         <div className='card'>
-                            <div className='card-header'>{project.name}</div>
+                            <div className='card-header'>{this.props.dish.name}</div>
                             <div className='card-body'>
-                                <p>{project.description}</p>
+                                <p>{this.props.dish.description}</p>
 
                                 <button className='btn btn-primary btn-sm'>
-                                    Mark as completed
+                                    Do something
                                 </button>
 
                                 <hr/>
 
-                                <ul className='list-group mt-3'>
-                                    {tasks.map(task => (
-                                        <li
-                                            className='list-group-item d-flex justify-content-between align-items-center'
-                                            key={task.id}
-                                        >
-                                            {task.title}
-
-                                            <button className='btn btn-primary btn-sm'>
-                                                Mark as completed
-                                            </button>
-                                        </li>
-                                    ))}
-                                </ul>
+                                <ul className='list-group mt-3'>List something</ul>
                             </div>
                         </div>
                     </div>
@@ -62,4 +33,17 @@ class SingleProject extends Component {
     }
 }
 
-export default SingleProject
+const mapStateToProps = state => {
+    return {
+        dish: state.dish.dish,
+        loading: state.dish.loading
+    };
+};
+
+const mapDispatchToProps = dispatch => {
+    return {
+        fetchDish: (id) => dispatch(actions.fetchDish(id))
+    };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(DishesShow)

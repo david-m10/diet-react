@@ -66556,7 +66556,7 @@ module.exports = function(module) {
     /*!*********************************************!*\
       !*** ./resources/js/actions/actionTypes.js ***!
       \*********************************************/
-    /*! exports provided: FETCH_DISHES_START, FETCH_DISHES_SUCCESS, FETCH_DISHES_FAIL, STORE_DISH, DELETE_DISH */
+    /*! exports provided: FETCH_DISHES_START, FETCH_DISHES_SUCCESS, FETCH_DISHES_FAIL, FETCH_DISH_START, FETCH_DISH_SUCCESS, FETCH_DISH_FAIL, STORE_DISH, UPDATE_DISH, DELETE_DISH */
     /***/ (function (module, __webpack_exports__, __webpack_require__) {
 
         "use strict";
@@ -66574,8 +66574,24 @@ module.exports = function(module) {
             return FETCH_DISHES_FAIL;
         });
         /* harmony export (binding) */
+        __webpack_require__.d(__webpack_exports__, "FETCH_DISH_START", function () {
+            return FETCH_DISH_START;
+        });
+        /* harmony export (binding) */
+        __webpack_require__.d(__webpack_exports__, "FETCH_DISH_SUCCESS", function () {
+            return FETCH_DISH_SUCCESS;
+        });
+        /* harmony export (binding) */
+        __webpack_require__.d(__webpack_exports__, "FETCH_DISH_FAIL", function () {
+            return FETCH_DISH_FAIL;
+        });
+        /* harmony export (binding) */
         __webpack_require__.d(__webpack_exports__, "STORE_DISH", function () {
             return STORE_DISH;
+        });
+        /* harmony export (binding) */
+        __webpack_require__.d(__webpack_exports__, "UPDATE_DISH", function () {
+            return UPDATE_DISH;
         });
         /* harmony export (binding) */
         __webpack_require__.d(__webpack_exports__, "DELETE_DISH", function () {
@@ -66584,8 +66600,78 @@ module.exports = function(module) {
         var FETCH_DISHES_START = 'FETCH_DISHES_START';
         var FETCH_DISHES_SUCCESS = 'FETCH_DISHES_SUCCESS';
         var FETCH_DISHES_FAIL = 'FETCH_DISHES_FAIL';
+        var FETCH_DISH_START = 'FETCH_DISH_START';
+        var FETCH_DISH_SUCCESS = 'FETCH_DISH_SUCCESS';
+        var FETCH_DISH_FAIL = 'FETCH_DISH_FAIL';
         var STORE_DISH = 'STORE_DISH';
+        var UPDATE_DISH = 'UPDATE_DISH';
         var DELETE_DISH = 'DELETE_DISH';
+
+        /***/
+    }),
+
+    /***/ "./resources/js/actions/dish.js":
+    /*!**************************************!*\
+      !*** ./resources/js/actions/dish.js ***!
+      \**************************************/
+    /*! exports provided: fetchDishSuccess, fetchDishFail, fetchDishStart, fetchDish */
+    /***/ (function (module, __webpack_exports__, __webpack_require__) {
+
+        "use strict";
+        __webpack_require__.r(__webpack_exports__);
+        /* harmony export (binding) */
+        __webpack_require__.d(__webpack_exports__, "fetchDishSuccess", function () {
+            return fetchDishSuccess;
+        });
+        /* harmony export (binding) */
+        __webpack_require__.d(__webpack_exports__, "fetchDishFail", function () {
+            return fetchDishFail;
+        });
+        /* harmony export (binding) */
+        __webpack_require__.d(__webpack_exports__, "fetchDishStart", function () {
+            return fetchDishStart;
+        });
+        /* harmony export (binding) */
+        __webpack_require__.d(__webpack_exports__, "fetchDish", function () {
+            return fetchDish;
+        });
+        /* harmony import */
+        var _actionTypes__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./actionTypes */ "./resources/js/actions/actionTypes.js");
+        /* harmony import */
+        var axios__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+        /* harmony import */
+        var axios__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_1__);
+
+
+        var fetchDishSuccess = function fetchDishSuccess(dish) {
+            return {
+                type: _actionTypes__WEBPACK_IMPORTED_MODULE_0__["FETCH_DISH_SUCCESS"],
+                dish: dish
+            };
+        };
+        var fetchDishFail = function fetchDishFail(error) {
+            return {
+                type: _actionTypes__WEBPACK_IMPORTED_MODULE_0__["FETCH_DISH_FAIL"],
+                error: error
+            };
+        };
+        var fetchDishStart = function fetchDishStart() {
+            return {
+                type: _actionTypes__WEBPACK_IMPORTED_MODULE_0__["FETCH_DISH_START"]
+            };
+        };
+        var fetchDish = function fetchDish(id) {
+            return function (dispatch) {
+                dispatch(fetchDishStart());
+                console.log(id);
+                axios__WEBPACK_IMPORTED_MODULE_1___default.a.get("/api/dishes/".concat(id)).then(function (res) {
+                    console.log(res.data);
+                    dispatch(fetchDishSuccess(res.data));
+                }).catch(function (err) {
+                    dispatch(fetchDishFail(err));
+                });
+            };
+        };
 
         /***/
     }),
@@ -66708,7 +66794,7 @@ module.exports = function(module) {
     /*!***************************************!*\
       !*** ./resources/js/actions/index.js ***!
       \***************************************/
-    /*! exports provided: fetchDishes */
+    /*! exports provided: fetchDishes, fetchDish */
     /***/ (function (module, __webpack_exports__, __webpack_require__) {
 
         "use strict";
@@ -66718,6 +66804,13 @@ module.exports = function(module) {
         /* harmony reexport (safe) */
         __webpack_require__.d(__webpack_exports__, "fetchDishes", function () {
             return _dishes__WEBPACK_IMPORTED_MODULE_0__["fetchDishes"];
+        });
+
+        /* harmony import */
+        var _dish__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./dish */ "./resources/js/actions/dish.js");
+        /* harmony reexport (safe) */
+        __webpack_require__.d(__webpack_exports__, "fetchDish", function () {
+            return _dish__WEBPACK_IMPORTED_MODULE_1__["fetchDish"];
         });
 
 
@@ -66821,14 +66914,16 @@ __webpack_require__.r(__webpack_exports__);
         });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-dom */ "./node_modules/react-dom/index.js");
-/* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react_dom__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/es/index.js");
-/* harmony import */ var _Header__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./Header */ "./resources/js/components/Header.js");
         /* harmony import */
-        var _Dishes_DishesIndex__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./Dishes/DishesIndex */ "./resources/js/components/Dishes/DishesIndex.js");
+        var react_router_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/es/index.js");
         /* harmony import */
-        var _Dishes_DishesCreate__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./Dishes/DishesCreate */ "./resources/js/components/Dishes/DishesCreate.js");
+        var _Header__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Header */ "./resources/js/components/Header.js");
+        /* harmony import */
+        var _Dishes_DishesIndex__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./Dishes/DishesIndex */ "./resources/js/components/Dishes/DishesIndex.js");
+        /* harmony import */
+        var _Dishes_DishesCreate__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./Dishes/DishesCreate */ "./resources/js/components/Dishes/DishesCreate.js");
+        /* harmony import */
+        var _Dishes_DishesShow__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./Dishes/DishesShow */ "./resources/js/components/Dishes/DishesShow.js");
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -66868,14 +66963,17 @@ function (_Component) {
   _createClass(App, [{
     key: "render",
     value: function render() {
-        return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Header__WEBPACK_IMPORTED_MODULE_3__["default"], null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__["Switch"], null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__["Route"], {
+        return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Header__WEBPACK_IMPORTED_MODULE_2__["default"], null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Switch"], null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Route"], {
         exact: true,
         path: "/",
-            component: _Dishes_DishesIndex__WEBPACK_IMPORTED_MODULE_4__["default"]
-        }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__["Route"], {
+            component: _Dishes_DishesIndex__WEBPACK_IMPORTED_MODULE_3__["default"]
+        }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Route"], {
             exact: true,
             path: "/dishes/create",
-            component: _Dishes_DishesCreate__WEBPACK_IMPORTED_MODULE_5__["default"]
+            component: _Dishes_DishesCreate__WEBPACK_IMPORTED_MODULE_4__["default"]
+        }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Route"], {
+            path: "/dishes/:id",
+            component: _Dishes_DishesShow__WEBPACK_IMPORTED_MODULE_5__["default"]
         })));
     }
   }]);
@@ -67148,18 +67246,18 @@ function (_Component) {
         }
 
 
-        var DishesList =
+        var DishesIndex =
             /*#__PURE__*/
             function (_Component) {
-                _inherits(DishesList, _Component);
+                _inherits(DishesIndex, _Component);
 
-                function DishesList() {
-                    _classCallCheck(this, DishesList);
+                function DishesIndex() {
+                    _classCallCheck(this, DishesIndex);
 
-                    return _possibleConstructorReturn(this, _getPrototypeOf(DishesList).apply(this, arguments));
+                    return _possibleConstructorReturn(this, _getPrototypeOf(DishesIndex).apply(this, arguments));
                 }
 
-                _createClass(DishesList, [{
+                _createClass(DishesIndex, [{
                     key: "componentDidMount",
                     value: function componentDidMount() {
                         this.props.fetchDishes();
@@ -67196,7 +67294,7 @@ function (_Component) {
     }
   }]);
 
-  return DishesList;
+                return DishesIndex;
             }(react__WEBPACK_IMPORTED_MODULE_0__["Component"]);
 
         var mapStateToProps = function mapStateToProps(state) {
@@ -67215,7 +67313,167 @@ function (_Component) {
         };
 
         /* harmony default export */
-        __webpack_exports__["default"] = (Object(react_redux__WEBPACK_IMPORTED_MODULE_1__["connect"])(mapStateToProps, mapDispatchToProps)(DishesList));
+        __webpack_exports__["default"] = (Object(react_redux__WEBPACK_IMPORTED_MODULE_1__["connect"])(mapStateToProps, mapDispatchToProps)(DishesIndex));
+
+        /***/
+    }),
+
+    /***/ "./resources/js/components/Dishes/DishesShow.js":
+    /*!******************************************************!*\
+      !*** ./resources/js/components/Dishes/DishesShow.js ***!
+      \******************************************************/
+    /*! exports provided: default */
+    /***/ (function (module, __webpack_exports__, __webpack_require__) {
+
+        "use strict";
+        __webpack_require__.r(__webpack_exports__);
+        /* harmony import */
+        var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+        /* harmony import */
+        var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+        /* harmony import */
+        var react_redux__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
+        /* harmony import */
+        var _actions_index__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../actions/index */ "./resources/js/actions/index.js");
+
+        function _typeof(obj) {
+            if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") {
+                _typeof = function _typeof(obj) {
+                    return typeof obj;
+                };
+            } else {
+                _typeof = function _typeof(obj) {
+                    return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj;
+                };
+            }
+            return _typeof(obj);
+        }
+
+        function _classCallCheck(instance, Constructor) {
+            if (!(instance instanceof Constructor)) {
+                throw new TypeError("Cannot call a class as a function");
+            }
+        }
+
+        function _defineProperties(target, props) {
+            for (var i = 0; i < props.length; i++) {
+                var descriptor = props[i];
+                descriptor.enumerable = descriptor.enumerable || false;
+                descriptor.configurable = true;
+                if ("value" in descriptor) descriptor.writable = true;
+                Object.defineProperty(target, descriptor.key, descriptor);
+            }
+        }
+
+        function _createClass(Constructor, protoProps, staticProps) {
+            if (protoProps) _defineProperties(Constructor.prototype, protoProps);
+            if (staticProps) _defineProperties(Constructor, staticProps);
+            return Constructor;
+        }
+
+        function _possibleConstructorReturn(self, call) {
+            if (call && (_typeof(call) === "object" || typeof call === "function")) {
+                return call;
+            }
+            return _assertThisInitialized(self);
+        }
+
+        function _assertThisInitialized(self) {
+            if (self === void 0) {
+                throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
+            }
+            return self;
+        }
+
+        function _getPrototypeOf(o) {
+            _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) {
+                return o.__proto__ || Object.getPrototypeOf(o);
+            };
+            return _getPrototypeOf(o);
+        }
+
+        function _inherits(subClass, superClass) {
+            if (typeof superClass !== "function" && superClass !== null) {
+                throw new TypeError("Super expression must either be null or a function");
+            }
+            subClass.prototype = Object.create(superClass && superClass.prototype, {
+                constructor: {
+                    value: subClass,
+                    writable: true,
+                    configurable: true
+                }
+            });
+            if (superClass) _setPrototypeOf(subClass, superClass);
+        }
+
+        function _setPrototypeOf(o, p) {
+            _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) {
+                o.__proto__ = p;
+                return o;
+            };
+            return _setPrototypeOf(o, p);
+        }
+
+
+        var DishesShow =
+            /*#__PURE__*/
+            function (_Component) {
+                _inherits(DishesShow, _Component);
+
+                function DishesShow() {
+                    _classCallCheck(this, DishesShow);
+
+                    return _possibleConstructorReturn(this, _getPrototypeOf(DishesShow).apply(this, arguments));
+                }
+
+                _createClass(DishesShow, [{
+                    key: "componentDidMount",
+                    value: function componentDidMount() {
+                        this.props.fetchDish(this.props.match.params.id);
+                    }
+                }, {
+                    key: "render",
+                    value: function render() {
+                        return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+                            className: "container py-4"
+                        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+                            className: "row justify-content-center"
+                        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+                            className: "col-md-8"
+                        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+                            className: "card"
+                        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+                            className: "card-header"
+                        }, this.props.dish.name), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+                            className: "card-body"
+                        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, this.props.dish.description), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+                            className: "btn btn-primary btn-sm"
+                        }, "Do something"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("hr", null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
+                            className: "list-group mt-3"
+                        }, "List something"))))));
+                    }
+                }]);
+
+                return DishesShow;
+            }(react__WEBPACK_IMPORTED_MODULE_0__["Component"]);
+
+        var mapStateToProps = function mapStateToProps(state) {
+            return {
+                dish: state.dish.dish,
+                loading: state.dish.loading
+            };
+        };
+
+        var mapDispatchToProps = function mapDispatchToProps(dispatch) {
+            return {
+                fetchDish: function fetchDish(id) {
+                    return dispatch(_actions_index__WEBPACK_IMPORTED_MODULE_2__["fetchDish"](id));
+                }
+            };
+        };
+
+        /* harmony default export */
+        __webpack_exports__["default"] = (Object(react_redux__WEBPACK_IMPORTED_MODULE_1__["connect"])(mapStateToProps, mapDispatchToProps)(DishesShow));
 
 /***/ }),
 
@@ -67281,11 +67539,14 @@ var Header = function Header() {
         var _registerServiceWorker__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./registerServiceWorker */ "./resources/js/registerServiceWorker.js");
         /* harmony import */
         var _reducers_dishes__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./reducers/dishes */ "./resources/js/reducers/dishes.js");
+        /* harmony import */
+        var _reducers_dish__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./reducers/dish */ "./resources/js/reducers/dish.js");
 
 
         var composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || redux__WEBPACK_IMPORTED_MODULE_4__["compose"];
         var rootReducer = Object(redux__WEBPACK_IMPORTED_MODULE_4__["combineReducers"])({
-            dishes: _reducers_dishes__WEBPACK_IMPORTED_MODULE_8__["default"]
+            dishes: _reducers_dishes__WEBPACK_IMPORTED_MODULE_8__["default"],
+            dish: _reducers_dish__WEBPACK_IMPORTED_MODULE_9__["default"]
         });
         var store = Object(redux__WEBPACK_IMPORTED_MODULE_4__["createStore"])(rootReducer, composeEnhancers(Object(redux__WEBPACK_IMPORTED_MODULE_4__["applyMiddleware"])(redux_thunk__WEBPACK_IMPORTED_MODULE_5__["default"])));
         var app = react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_redux__WEBPACK_IMPORTED_MODULE_3__["Provider"], {
@@ -67293,6 +67554,74 @@ var Header = function Header() {
         }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__["BrowserRouter"], null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_App__WEBPACK_IMPORTED_MODULE_6__["default"], null)));
         react_dom__WEBPACK_IMPORTED_MODULE_1___default.a.render(app, document.getElementById('root'));
         Object(_registerServiceWorker__WEBPACK_IMPORTED_MODULE_7__["default"])();
+
+        /***/
+    }),
+
+    /***/ "./resources/js/reducers/dish.js":
+    /*!***************************************!*\
+      !*** ./resources/js/reducers/dish.js ***!
+      \***************************************/
+    /*! exports provided: default */
+    /***/ (function (module, __webpack_exports__, __webpack_require__) {
+
+        "use strict";
+        __webpack_require__.r(__webpack_exports__);
+        /* harmony import */
+        var _actions_actionTypes__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../actions/actionTypes */ "./resources/js/actions/actionTypes.js");
+        /* harmony import */
+        var _utilities__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./utilities */ "./resources/js/reducers/utilities.js");
+
+
+        var initialState = {
+            dish: {
+                name: '',
+                description: ''
+            },
+            loading: false
+        };
+
+        var fetchDishStart = function fetchDishStart(state) {
+            return Object(_utilities__WEBPACK_IMPORTED_MODULE_1__["updateObject"])(state, {
+                loading: true
+            });
+        };
+
+        var fetchDishSuccess = function fetchDishSuccess(state, action) {
+            console.log(action);
+            return Object(_utilities__WEBPACK_IMPORTED_MODULE_1__["updateObject"])(state, {
+                dish: action.dish,
+                loading: false
+            });
+        };
+
+        var fetchDishFail = function fetchDishFail(state) {
+            return Object(_utilities__WEBPACK_IMPORTED_MODULE_1__["updateObject"])(state, {
+                loading: false
+            });
+        };
+
+        var reducer = function reducer() {
+            var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : initialState;
+            var action = arguments.length > 1 ? arguments[1] : undefined;
+
+            switch (action.type) {
+                case _actions_actionTypes__WEBPACK_IMPORTED_MODULE_0__["FETCH_DISH_START"]:
+                    return fetchDishStart(state);
+
+                case _actions_actionTypes__WEBPACK_IMPORTED_MODULE_0__["FETCH_DISH_SUCCESS"]:
+                    return fetchDishSuccess(state, action);
+
+                case _actions_actionTypes__WEBPACK_IMPORTED_MODULE_0__["FETCH_DISH_FAIL"]:
+                    return fetchDishFail(state);
+
+                default:
+                    return state;
+            }
+        };
+
+        /* harmony default export */
+        __webpack_exports__["default"] = (reducer);
 
         /***/
     }),
@@ -67342,13 +67671,13 @@ var Header = function Header() {
 
             switch (action.type) {
                 case _actions_actionTypes__WEBPACK_IMPORTED_MODULE_0__["FETCH_DISHES_START"]:
-                    return fetchDishesStart(state, action);
+                    return fetchDishesStart(state);
 
                 case _actions_actionTypes__WEBPACK_IMPORTED_MODULE_0__["FETCH_DISHES_SUCCESS"]:
                     return fetchDishesSuccess(state, action);
 
                 case _actions_actionTypes__WEBPACK_IMPORTED_MODULE_0__["FETCH_DISHES_FAIL"]:
-                    return fetchDishesFail(state, action);
+                    return fetchDishesFail(state);
 
                 default:
                     return state;
@@ -67496,7 +67825,8 @@ var Header = function Header() {
             }
         }
 
-        /***/ }),
+        /***/
+    }),
 
 /***/ "./resources/sass/app.scss":
 /*!*********************************!*\

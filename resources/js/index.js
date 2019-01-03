@@ -9,11 +9,13 @@ import App from './components/App';
 import registerServiceWorker from './registerServiceWorker';
 
 import dishesReducer from './reducers/dishes';
+import dishReducer from './reducers/dish';
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
 const rootReducer = combineReducers({
     dishes: dishesReducer,
+    dish: dishReducer,
 });
 
 const store = createStore(rootReducer, composeEnhancers(

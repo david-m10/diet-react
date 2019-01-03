@@ -18,3 +18,11 @@ Route::get('dishes', function () {
         ],
     ];
 });
+
+Route::get('dishes/{id}', function () {
+    return
+        [
+            'id' => 1,
+            'name' => 'Salatka',
+        ];
+});

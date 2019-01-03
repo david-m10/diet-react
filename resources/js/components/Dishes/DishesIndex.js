@@ -3,7 +3,7 @@ import {connect} from 'react-redux';
 import {Link} from 'react-router-dom';
 import * as actions from '../../actions/index';
 
-class DishesList extends Component {
+class DishesIndex extends Component {
     componentDidMount() {
         this.props.fetchDishes();
     }
@@ -56,4 +56,4 @@ const mapDispatchToProps = dispatch => {
     };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(DishesList);
+export default connect(mapStateToProps, mapDispatchToProps)(DishesIndex);

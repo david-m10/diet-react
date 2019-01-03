@@ -2,24 +2,28 @@ import * as actionTypes from '../actions/actionTypes';
 import {updateObject} from './utilities';
 
 const initialState = {
-    dishes: [],
+    dish: {
+        name: '',
+        description: '',
+    },
     loading: false,
 };
 
-const fetchDishesStart = (state) => {
+const fetchDishStart = (state) => {
     return updateObject(state, {
         loading: true
     });
 };
 
-const fetchDishesSuccess = (state, action) => {
+const fetchDishSuccess = (state, action) => {
+    console.log(action);
     return updateObject(state, {
-        dishes: action.dishes,
+        dish: action.dish,
         loading: false
     });
 };
 
-const fetchDishesFail = (state) => {
+const fetchDishFail = (state) => {
     return updateObject(state, {
         loading: false
     });
@@ -27,12 +31,12 @@ const fetchDishesFail = (state) => {
 
 const reducer = (state = initialState, action) => {
     switch (action.type) {
-        case actionTypes.FETCH_DISHES_START:
-            return fetchDishesStart(state);
-        case actionTypes.FETCH_DISHES_SUCCESS:
-            return fetchDishesSuccess(state, action);
-        case actionTypes.FETCH_DISHES_FAIL:
-            return fetchDishesFail(state);
+        case actionTypes.FETCH_DISH_START:
+            return fetchDishStart(state);
+        case actionTypes.FETCH_DISH_SUCCESS:
+            return fetchDishSuccess(state, action);
+        case actionTypes.FETCH_DISH_FAIL:
+            return fetchDishFail(state);
         default:
             return state;
     }
