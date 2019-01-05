@@ -21,7 +21,7 @@ export const fetchDishesStart = () => {
     };
 };
 
-export const fetchDishes = () => {
+export const fetchDishes = (urlParams) => {
     return dispatch => {
         dispatch(fetchDishesStart());
         axios

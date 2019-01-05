@@ -11,9 +11,11 @@ export default class App extends Component {
             <div>
                 <Header/>
                 <Switch>
-                    <Route exact path='/' component={DishesList}/>
                     <Route exact path='/dishes/create' component={DishesCreate}/>
-                    <Route path='/dishes/:id' component={DishesShow}/>
+                    <Route path='/dishes/:id([0-9]+)' component={DishesShow}/>
+                    <Route exact path='/dishes/:urlData([a-zA-Z0-9/=,]+)?' component={DishesList}/>
+
+
                 </Switch>
             </div>
         )

@@ -24,11 +24,10 @@ export const fetchDishStart = () => {
 export const fetchDish = (id) => {
     return dispatch => {
         dispatch(fetchDishStart());
-        console.log(id);
+
         axios
             .get(`/api/dishes/${id}`)
             .then(res => {
-                console.log(res.data);
                 dispatch(fetchDishSuccess(res.data));
             })
             .catch(err => {
