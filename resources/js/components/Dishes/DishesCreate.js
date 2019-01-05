@@ -1,104 +1,101 @@
-import axios from 'axios'
-import React, {Component} from 'react'
+import React from 'react';
+import PropTypes from 'prop-types';
+import {withStyles} from '@material-ui/core/styles';
+import ExpansionPanel from '@material-ui/core/ExpansionPanel';
+import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
+import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
+import Typography from '@material-ui/core/Typography';
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 
-class DishesCreate extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            name: '',
-            description: '',
-            errors: []
-        };
-        this.handleFieldChange = this.handleFieldChange.bind(this);
-        this.handleCreateNewDish = this.handleCreateNewDish.bind(this);
-        this.hasErrorFor = this.hasErrorFor.bind(this);
-        this.renderErrorFor = this.renderErrorFor.bind(this);
-    }
+const styles = theme => ({
+    root: {
+        width: '100%',
+        maxWidth: 1000,
+        margin: '0 auto',
+        paddingTop: '1rem',
+    },
+    heading: {
+        fontSize: theme.typography.pxToRem(15),
+        flexBasis: '33.33%',
+        flexShrink: 0,
+    },
+    secondaryHeading: {
+        fontSize: theme.typography.pxToRem(15),
+        color: theme.palette.text.secondary,
+    },
+});
 
-    handleFieldChange(event) {
+class DishesCreate extends React.Component {
+    state = {
+        expanded: 'panel1',
+    };
+
+    handleChange = panel => (event, expanded) => {
         this.setState({
-            [event.target.name]: event.target.value
-        })
-    }
-
-    handleCreateNewDish(event) {
-        event.preventDefault();
-
-        const {history} = this.props;
-
-        const dish = {
-            name: this.state.name,
-            description: this.state.description
-        };
-
-        axios.post('/api/dishes', dish)
-            .then(response => {
-                // redirect to the homepage
-                history.push('/')
-            })
-            .catch(error => {
-                this.setState({
-                    errors: error.response.data.errors
-                })
-            })
-    }
-
-    hasErrorFor(field) {
-        return !!this.state.errors[field]
-    }
-
-    renderErrorFor(field) {
-        if (this.hasErrorFor(field)) {
-            return (
-                <span className='invalid-feedback'>
-              <strong>{this.state.errors[field][0]}</strong>
-            </span>
-            )
-        }
-    }
+            expanded: expanded ? panel : false,
+        });
+    };
 
     render() {
+        const {classes} = this.props;
+        const {expanded} = this.state;
+
         return (
-            <div className='container py-4'>
-                <div className='row justify-content-center'>
-                    <div className='col-md-6'>
-                        <div className='card'>
-                            <div className='card-header'>Create new dish</div>
-                            <div className='card-body'>
-                                <form onSubmit={this.handleCreateNewDish}>
-                                    <div className='form-group'>
-                                        <label htmlFor='name'>Dish name</label>
-                                        <input
-                                            id='name'
-                                            type='text'
-                                            className={`form-control ${this.hasErrorFor('name') ? 'is-invalid' : ''}`}
-                                            name='name'
-                                            value={this.state.name}
-                                            onChange={this.handleFieldChange}
-                                        />
-                                        {this.renderErrorFor('name')}
-                                    </div>
-                                    <div className='form-group'>
-                                        <label htmlFor='description'>Dish description</label>
-                                        <textarea
-                                            id='description'
-                                            className={`form-control ${this.hasErrorFor('description') ? 'is-invalid' : ''}`}
-                                            name='description'
-                                            rows='10'
-                                            value={this.state.description}
-                                            onChange={this.handleFieldChange}
-                                        />
-                                        {this.renderErrorFor('description')}
-                                    </div>
-                                    <button className='btn btn-primary'>Create</button>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+            <div className={classes.root}>
+                <ExpansionPanel expanded={expanded === 'panel1'} onChange={this.handleChange('panel1')}>
+                    <ExpansionPanelSummary expandIcon={<ExpandMoreIcon/>}>
+                        <Typography className={classes.heading}>Dane podstawowe</Typography>
+                        <Typography className={classes.secondaryHeading}>todo fill data</Typography>
+                    </ExpansionPanelSummary>
+                    <ExpansionPanelDetails>
+                        <Typography>
+                            Nazwa, tytuł, opis
+                        </Typography>
+                    </ExpansionPanelDetails>
+                </ExpansionPanel>
+                <ExpansionPanel expanded={expanded === 'panel2'} onChange={this.handleChange('panel2')}>
+                    <ExpansionPanelSummary expandIcon={<ExpandMoreIcon/>}>
+                        <Typography className={classes.heading}>Składniki</Typography>
+                        <Typography className={classes.secondaryHeading}>
+                            Mały spis składników...
+                        </Typography>
+                    </ExpansionPanelSummary>
+                    <ExpansionPanelDetails>
+                        <Typography>
+                            Wybierz skladniki oraz potrzebne ilości
+                        </Typography>
+                    </ExpansionPanelDetails>
+                </ExpansionPanel>
+                <ExpansionPanel expanded={expanded === 'panel3'} onChange={this.handleChange('panel3')}>
+                    <ExpansionPanelSummary expandIcon={<ExpandMoreIcon/>}>
+                        <Typography className={classes.heading}>Kreator przepisu</Typography>
+                        <Typography className={classes.secondaryHeading}>
+                            (ilość kroków)
+                        </Typography>
+                    </ExpansionPanelSummary>
+                    <ExpansionPanelDetails>
+                        <Typography>
+                            1... 2... 3...
+                        </Typography>
+                    </ExpansionPanelDetails>
+                </ExpansionPanel>
+                <ExpansionPanel expanded={expanded === 'panel4'} onChange={this.handleChange('panel4')}>
+                    <ExpansionPanelSummary expandIcon={<ExpandMoreIcon/>}>
+                        <Typography className={classes.heading}>Dodatkowe informacje</Typography>
+                    </ExpansionPanelSummary>
+                    <ExpansionPanelDetails>
+                        <Typography>
+                            Tagi
+                        </Typography>
+                    </ExpansionPanelDetails>
+                </ExpansionPanel>
             </div>
-        )
+        );
     }
 }
 
-export default DishesCreate
+DishesCreate.propTypes = {
+    classes: PropTypes.object.isRequired,
+};
+
+export default withStyles(styles)(DishesCreate);
