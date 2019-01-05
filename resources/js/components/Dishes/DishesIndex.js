@@ -71,7 +71,6 @@ const styles = theme => {
         },
         addIcon: {
             fontSize: '2.5rem',
-            color: theme.palette.text.primary,
         },
     }
 };
@@ -151,7 +150,7 @@ class DishesIndex extends Component {
                         </div>
                         <div className="top-right-options">
                             <Link to='/dishes/create'>
-                                <AddCircleIcon className={classes.addIcon}/>
+                                <AddCircleIcon className={classes.addIcon} color="primary"/>
                             </Link>
                         </div>
                     </div>
