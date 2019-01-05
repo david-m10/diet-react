@@ -91,6 +91,7 @@ class FiltersLeft extends React.Component {
                                                 checked={this.state[name] && this.state[name][item.id]}
                                                 onClick={this.handleCheckboxChange(name, item.id)}
                                                 value={'' + item.id}
+                                                color="primary"
                                             />
                                         }
                                         label={item.display}
