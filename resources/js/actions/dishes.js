@@ -21,11 +21,17 @@ export const fetchDishesStart = () => {
     };
 };
 
+export const clearDishes = () => {
+    return {
+        type: actionTypes.CLEAR_DISHES
+    };
+};
+
 export const fetchDishes = (urlParams) => {
     return dispatch => {
         dispatch(fetchDishesStart());
         axios
-            .get('/api/dishes')
+            .get(`/api${urlParams}`)
             .then(res => {
                 const fetchedDishes = [];
 

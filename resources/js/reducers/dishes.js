@@ -25,6 +25,12 @@ const fetchDishesFail = (state) => {
     });
 };
 
+const clearDishes = (state) => {
+    return updateObject(state, {
+        dishes: []
+    });
+};
+
 const reducer = (state = initialState, action) => {
     switch (action.type) {
         case actionTypes.FETCH_DISHES_START:
@@ -33,6 +39,8 @@ const reducer = (state = initialState, action) => {
             return fetchDishesSuccess(state, action);
         case actionTypes.FETCH_DISHES_FAIL:
             return fetchDishesFail(state);
+        case actionTypes.CLEAR_DISHES:
+            return clearDishes(state);
         default:
             return state;
     }

@@ -1,5 +1,6 @@
 export {
-    fetchDishes
+    fetchDishes,
+    clearDishes,
 } from './dishes';
 
 export {

@@ -13,9 +13,7 @@ export default class App extends Component {
                 <Switch>
                     <Route exact path='/dishes/create' component={DishesCreate}/>
                     <Route path='/dishes/:id([0-9]+)' component={DishesShow}/>
-                    <Route exact path='/dishes/:urlData([a-zA-Z0-9/=,]+)?' component={DishesList}/>
-
-
+                    <Route exact path='/dishes/:urlData([a-zA-Z0-9/+_,=,]+)?' component={DishesList}/>
                 </Switch>
             </div>
         )
