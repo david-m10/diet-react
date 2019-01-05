@@ -28,7 +28,7 @@ const styles = theme => ({
 });
 
 function getElementsCountByWidth(width) {
-    let maxCount = Math.floor(width / 300) || 1;
+    let maxCount = Math.floor(width / 400) || 1;
 
     if (maxCount > 5) {
         maxCount = 5;
