@@ -13,13 +13,15 @@ import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 import {withRouter} from 'react-router-dom';
+import AddCircleIcon from '@material-ui/icons/AddCircle';
 
 const styles = theme => {
     return {
         root: {
-            paddingLeft: 40,
-            paddingRight: 40,
-            paddingTop: 15,
+            paddingLeft: '1.5rem',
+            paddingRight: '1.5rem',
+            paddingTop: '1rem',
+            paddingBottom: '1rem',
         },
         heading: {
             fontSize: theme.typography.pxToRem(15),
@@ -66,6 +68,10 @@ const styles = theme => {
             //         'margin': '0 !important',
             //     },
             // },
+        },
+        addIcon: {
+            fontSize: '2.5rem',
+            color: theme.palette.text.primary,
         },
     }
 };
@@ -120,7 +126,7 @@ class DishesIndex extends Component {
                     <div className={classes.topRight}>
                         <div>
                             <FormControl className={`${classes.formControl} ${classes.sort}`}>
-                                <InputLabel htmlFor="age-simple">Sortuj wg</InputLabel>
+                                <InputLabel htmlFor="age-simple">Sortuj według</InputLabel>
                                 <Select
                                     value={this.state.sort}
                                     onChange={this.onChangeSort()}
@@ -147,8 +153,8 @@ class DishesIndex extends Component {
                             </FormControl>
                         </div>
                         <div className="top-right-options">
-                            <Link className='btn btn-primary btn-sm mb-3' to='/dishes/create'>
-                                Create new dish
+                            <Link to='/dishes/create'>
+                                <AddCircleIcon className={classes.addIcon}/>
                             </Link>
                         </div>
                     </div>
