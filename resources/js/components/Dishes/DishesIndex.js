@@ -79,7 +79,7 @@ const styles = theme => {
 class DishesIndex extends Component {
     state = {
         filtersLeftHidden: false,
-        sort: 'name_asc',
+        sort: 'sort_by=name/sort_type=asc',
     };
 
     clearFilters() {
@@ -94,9 +94,7 @@ class DishesIndex extends Component {
 
     onChangeSort = () => (event) => {
         const sort = event.target.value;
-        this.setState({
-            sort
-        });
+        this.setState({sort});
         this.props.history.push(`/dishes/${sort}`);
     };
 
@@ -122,17 +120,16 @@ class DishesIndex extends Component {
                         </ExpansionPanel>
                     </div>
 
-
                     <div className={classes.topRight}>
                         <div>
                             <FormControl className={`${classes.formControl} ${classes.sort}`}>
-                                <InputLabel htmlFor="age-simple">Sortuj według</InputLabel>
+                                <InputLabel htmlFor="sort_by">Sortuj według</InputLabel>
                                 <Select
                                     value={this.state.sort}
                                     onChange={this.onChangeSort()}
                                     inputProps={{
                                         name: 'sort_by',
-                                        id: 'age-simple',
+                                        id: 'sort_by',
                                     }}
                                 >
                                     <MenuItem value='sort_by=name/sort_type=asc'>Nazwa rosnąco</MenuItem>
