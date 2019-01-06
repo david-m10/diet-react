@@ -14,14 +14,21 @@ import AccessTime from '@material-ui/icons/AccessTime';
 import AccessAlarm from '@material-ui/icons/AccessAlarm';
 import FavoriteBadge from '../FavoriteBadge';
 
-const styles = {
+const styles = theme => ({
     card: {
         maxWidth: '100%'
     },
     media: {
         height: 150
+    },
+    favorite: {
+        marginLeft: 'auto',
+        marginRight: 10,
+    },
+    description: {
+        fontSize: theme.typography.pxToRem(13),
     }
-};
+});
 
 function randomInt(min = 1, max = 99) {
     return Math.round(min + Math.random() * (max - min));
@@ -45,10 +52,10 @@ function DishCard(props) {
                     title={props.name}
                 />
                 <CardContent>
-                    <Typography gutterBottom variant="h5" component="h2">
+                    <Typography gutterBottom variant="h6" component="h3">
                         {props.name}
                     </Typography>
-                    <Typography component="p">
+                    <Typography className={props.classes.description} component="p">
                         {props.description_short}
                     </Typography>
                 </CardContent>
@@ -66,7 +73,7 @@ function DishCard(props) {
                     avatar={<Avatar><AccessAlarm/></Avatar>}
                     label={`${props.time_making}min`}
                 />
-                <FavoriteBadge count={randomInt()}/>
+                <FavoriteBadge className={props.classes.favorite} count={randomInt()}/>
             </CardActions>
         </Card>
     );

@@ -20,7 +20,7 @@ function FavoriteBadge(props) {
     const {classes} = props;
 
     return (
-        <IconButton aria-label="Cart">
+        <IconButton className={props.className} aria-label="Cart">
             <Badge badgeContent={props.count} color="secondary" classes={{badge: classes.badge}}>
                 <Favorite color='secondary'/>
             </Badge>
