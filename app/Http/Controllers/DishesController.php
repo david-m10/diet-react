@@ -19,9 +19,6 @@ class DishesController extends Controller
     {
         $parser = new UrlParser($parserData);
 
-        $sortBy = 'name';
-        $sortType = 'asc';
-
         $availableSortNames = [
             'id',
             'name',
@@ -29,14 +26,20 @@ class DishesController extends Controller
             'time_making',
             'created_at',
         ];
-        $availableSortTypes = ['asc', 'desc'];
 
+        $availableSortTypes = [
+            'asc',
+            'desc',
+        ];
+
+        $sortBy = 'name';
         if ($requestSortBy = $parser->getFirstValue('sort_by')) {
             if (in_array($sortBy, $availableSortNames)) {
                 $sortBy = $requestSortBy;
             }
         }
 
+        $sortType = 'asc';
         if ($requestSortType = $parser->getFirstValue('sort_type')) {
             if (in_array($sortType, $availableSortTypes)) {
                 $sortType = $requestSortType;
