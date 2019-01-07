@@ -20,7 +20,7 @@ class DishesList extends Component {
     }
 
     render() {
-        const {width, height} = this.state.dimensions;
+        const width = Math.ceil(this.state.dimensions.width);
 
         return (
             <Measure
@@ -40,7 +40,7 @@ class DishesList extends Component {
                                         {...dish}
                                     />
                                 ))}
-                                width={Math.ceil(width)}
+                                width={width}
                             />
                         </div>
                     </div>

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import {withStyles} from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
@@ -27,34 +27,50 @@ const styles = theme => ({
     },
 });
 
-function getElementsCountByWidth(width) {
-    let maxCount = Math.floor(width / 400) || 1;
+function getElementsCount(width) {
+    let count = Math.floor(width / 400);
 
-    if (maxCount > 5) {
-        maxCount = 5;
+    if (count < 1) {
+        return 1;
     }
 
-    return `elementsCount${maxCount}`;
+    if (count > 5) {
+        return 5;
+    }
+
+    return count;
 }
 
-function AutoGrid(props) {
-    const {classes, elements, width} = props;
-    const elementsCountClass = getElementsCountByWidth(width);
+class AutoGrid extends Component {
+    shouldComponentUpdate(nextProps, nextState) {
+        if (this.props.width !== nextProps.width) {
+            return getElementsCount(this.props.width) !== getElementsCount(nextProps.width);
+        }
 
-    return (
-        <div className={classes.root}>
-            <Grid container spacing={24}>
-                {elements.map(element => (
-                    <Grid item className={classes[elementsCountClass]} key={element.key}>
-                        <div className={classes.element}>
-                            {element}
-                        </div>
-                    </Grid>
-                ))}
-            </Grid>
-        </div>
-    );
-}
+        return true;
+    };
+
+    render() {
+        const {classes, elements} = this.props;
+        const elementsCount = getElementsCount(this.props.width);
+
+        return (
+            <div className={classes.root}>
+                <Grid container spacing={24}>
+                    {elements.map(element => (
+                        <Grid item
+                              className={classes[`elementsCount${elementsCount}`]}
+                              key={element.key}>
+                            <div className={classes.element}>
+                                {element}
+                            </div>
+                        </Grid>
+                    ))}
+                </Grid>
+            </div>
+        )
+    }
+};
 
 AutoGrid.propTypes = {
     classes: PropTypes.object.isRequired,

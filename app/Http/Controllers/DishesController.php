@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Resources\DishResource;
 use App\Models\Dishes\Dish;
 use App\UrlParser;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 
 class DishesController extends Controller
@@ -12,43 +13,15 @@ class DishesController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @param null|string $parserData
+     * @param string $parserData
      * @return \Illuminate\Http\Resources\Json\AnonymousResourceCollection
      */
-    public function index(?string $parserData)
+    public function index(string $parserData = '')
     {
         $parser = new UrlParser($parserData);
+        $query = $this->buildQuery($parser);
 
-        $availableSortNames = [
-            'id',
-            'name',
-            'time_preparation',
-            'time_making',
-            'created_at',
-        ];
-
-        $availableSortTypes = [
-            'asc',
-            'desc',
-        ];
-
-        $sortBy = 'name';
-        if ($requestSortBy = $parser->getFirstValue('sort_by')) {
-            if (in_array($sortBy, $availableSortNames)) {
-                $sortBy = $requestSortBy;
-            }
-        }
-
-        $sortType = 'asc';
-        if ($requestSortType = $parser->getFirstValue('sort_type')) {
-            if (in_array($sortType, $availableSortTypes)) {
-                $sortType = $requestSortType;
-            }
-        }
-
-        $dishes = Dish::take(50)->orderBy($sortBy, $sortType)->get();
-
-        return DishResource::collection($dishes);
+        return DishResource::collection($query->get());
     }
 
     /**
@@ -103,5 +76,51 @@ class DishesController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    /**
+     * @param UrlParser $parser
+     * @return Builder
+     */
+    private function buildQuery(UrlParser $parser): Builder
+    {
+        $query = Dish::query()->take(50);
+
+        if ($nameContain = $parser->getFirstValue('name_contain')) {
+            $query->where('name', 'like', "%$nameContain%");
+        }
+
+        if ($nameNotContain = $parser->getFirstValue('name_not_contain')) {
+            $query->where('name', 'not like', "%$nameNotContain%");
+        }
+
+        $availableSortNames = [
+            'id',
+            'name',
+            'time_preparation',
+            'time_making',
+            'created_at',
+        ];
+
+        $availableSortTypes = [
+            'asc',
+            'desc',
+        ];
+
+        $sortBy = 'name';
+        if ($requestSortBy = $parser->getFirstValue('sort_by')) {
+            if (in_array($sortBy, $availableSortNames)) {
+                $sortBy = $requestSortBy;
+            }
+        }
+
+        $sortType = 'asc';
+        if ($requestSortType = $parser->getFirstValue('sort_type')) {
+            if (in_array($sortType, $availableSortTypes)) {
+                $sortType = $requestSortType;
+            }
+        }
+
+        return $query->orderBy($sortBy, $sortType);
     }
 }

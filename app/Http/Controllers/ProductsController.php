@@ -12,10 +12,10 @@ class ProductsController extends ApiController
     /**
      * Display a listing of the resource.
      *
-     * @param null|string $parserData
+     * @param string $parserData
      * @return \Illuminate\Http\Resources\Json\AnonymousResourceCollection
      */
-    public function index(?string $parserData)
+    public function index(string $parserData = '')
     {
         $parser = new UrlParser($parserData);
 

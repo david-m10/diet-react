@@ -167,6 +167,22 @@ class DishesIndex extends Component {
                         hidden={this.state.filtersLeftHidden}
                         data={[
                             {
+                                'display': 'Nazwa',
+                                'name': 'name',
+                                'type': 'search_with_items',
+                                'items': [
+                                    {
+                                        name: 'name_contain',
+                                        display: 'Zawiera',
+                                    },
+                                    {
+                                        name: 'name_not_contain',
+                                        display: 'Nie zawiera',
+                                    },
+                                ],
+                                'position': 0,
+                            },
+                            {
                                 'display': 'Tagi',
                                 'name': 'tags',
                                 'type': 'search',

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import {withStyles} from '@material-ui/core/styles';
 import ExpansionPanel from '@material-ui/core/ExpansionPanel';
@@ -10,6 +10,7 @@ import Clear from '@material-ui/icons/Clear';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
 import {withRouter} from 'react-router-dom';
+import TextField from '@material-ui/core/TextField';
 
 const styles = theme => ({
     root: {
@@ -34,7 +35,7 @@ const styles = theme => ({
     },
 });
 
-class FiltersLeft extends React.Component {
+class FiltersLeft extends Component {
     constructor(props) {
         super(props);
 
@@ -57,7 +58,23 @@ class FiltersLeft extends React.Component {
         });
     };
 
-    handleCheckboxChange = (name, value) => event => {
+    handleCheckboxChange = (name, value) => (event) => {
+        if (!value.length) {
+            this.props.history.push(`/dishes`);
+            return;
+        }
+
+        this.props.history.push(`/dishes/${event.target.name}=${event.target.value}`);
+    };
+
+    handleSearchChange = (name) => (event) => {
+        const value = event.target.value;
+
+        if (!value.length) {
+            this.props.history.push(`/dishes`);
+            return;
+        }
+
         this.props.history.push(`/dishes/${name}=${value}`);
     };
 
@@ -96,6 +113,28 @@ class FiltersLeft extends React.Component {
                                         label={item.display}
                                     />
                                 })}
+
+                                {type === 'search_with_items' && Array.isArray(items) && items.map((item) => {
+                                    return <TextField
+                                        key={item.name}
+                                        label={item.display}
+                                        type="search"
+                                        className={classes.textField}
+                                        margin="normal"
+                                        onChange={this.handleSearchChange(item.name)}
+                                    />
+                                })}
+
+                                {type === 'search' && (
+                                    <TextField
+                                        id="standard-search"
+                                        label="Search field"
+                                        type="search"
+                                        className={classes.textField}
+                                        margin="normal"
+                                        onChange={this.handleSearchChange(name)}
+                                    />
+                                )}
 
                             </ExpansionPanelDetails>
                         </ExpansionPanel>);
