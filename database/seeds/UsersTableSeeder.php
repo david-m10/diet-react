@@ -25,10 +25,10 @@ class UsersTableSeeder extends Seeder
         return [
             [
                 'id' => 1,
-                'name' => 'P',
-                'surname' => 'M',
-                'nickname' => 'Przemek',
-                'email' => 'pmx10@wp.pl',
+                'name' => 'Cristiano',
+                'surname' => 'Ronaldo',
+                'nickname' => 'CR7',
+                'email' => 'example@example.com',
                 'password' => bcrypt('example'),
             ],
         ];
