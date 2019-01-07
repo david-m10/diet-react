@@ -5,6 +5,8 @@ use Illuminate\Database\Migrations\Migration;
 
 class CreateDishesTable extends Migration
 {
+    const TABLE = 'dishes';
+
     /**
      * Run the migrations.
      *
@@ -12,7 +14,7 @@ class CreateDishesTable extends Migration
      */
     public function up()
     {
-        Schema::create('dishes', function (Blueprint $table) {
+        Schema::create(self::TABLE, function (Blueprint $table) {
             $table->increments('id');
 
             $table->unsignedInteger('user_id');
@@ -34,6 +36,10 @@ class CreateDishesTable extends Migration
 
             $table->timestamps();
         });
+
+        Schema::table(self::TABLE, function (Blueprint $table) {
+            $table->foreign('user_id')->references('id')->on('users');
+        });
     }
 
     /**
@@ -43,6 +49,6 @@ class CreateDishesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('dishes');
+        Schema::dropIfExists(self::TABLE);
     }
 }

@@ -5,6 +5,8 @@ use Illuminate\Database\Migrations\Migration;
 
 class CreateProductsTable extends Migration
 {
+    const TABLE = 'products';
+
     /**
      * Run the migrations.
      *
@@ -12,11 +14,10 @@ class CreateProductsTable extends Migration
      */
     public function up()
     {
-        Schema::create('products', function (Blueprint $table) {
+        Schema::create(self::TABLE, function (Blueprint $table) {
             $table->increments('id');
 
             $table->unsignedInteger('producer_id')->nullable();
-            $table->unsignedInteger('category_id')->nullable();
             $table->unsignedInteger('primitive_id')->nullable();
 
             $table->boolean('is_primitive')->default(false);
@@ -39,6 +40,10 @@ class CreateProductsTable extends Migration
 
             $table->timestamps();
         });
+
+        Schema::table(self::TABLE, function (Blueprint $table) {
+            $table->foreign('producer_id')->references('id')->on('producers');
+        });
     }
 
     /**
@@ -48,6 +53,6 @@ class CreateProductsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('products');
+        Schema::dropIfExists(self::TABLE);
     }
 }

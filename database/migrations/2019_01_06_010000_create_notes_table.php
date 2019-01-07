@@ -5,6 +5,8 @@ use Illuminate\Database\Migrations\Migration;
 
 class CreateNotesTable extends Migration
 {
+    const TABLE = 'notes';
+
     /**
      * Run the migrations.
      *
@@ -12,14 +14,19 @@ class CreateNotesTable extends Migration
      */
     public function up()
     {
-        Schema::create('notes', function (Blueprint $table) {
+        Schema::create(self::TABLE, function (Blueprint $table) {
             $table->increments('id');
             $table->unsignedInteger('user_id');
+            $table->morphs('noteable');
 
             $table->string('title');
             $table->text('content')->nullable();
 
             $table->timestamps();
+        });
+
+        Schema::table(self::TABLE, function (Blueprint $table) {
+            $table->foreign('user_id')->references('id')->on('users');
         });
     }
 
@@ -30,6 +37,6 @@ class CreateNotesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('notes');
+        Schema::dropIfExists(self::TABLE);
     }
 }

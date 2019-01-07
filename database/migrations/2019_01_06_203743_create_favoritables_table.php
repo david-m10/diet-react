@@ -5,6 +5,8 @@ use Illuminate\Database\Migrations\Migration;
 
 class CreateFavoritablesTable extends Migration
 {
+    const TABLE = 'favoritables';
+
     /**
      * Run the migrations.
      *
@@ -12,11 +14,15 @@ class CreateFavoritablesTable extends Migration
      */
     public function up()
     {
-        Schema::create('favoritables', function (Blueprint $table) {
+        Schema::create(self::TABLE, function (Blueprint $table) {
             $table->increments('id');
             $table->unsignedInteger('user_id');
             $table->morphs('favoritable');
             $table->timestamps();
+        });
+
+        Schema::table(self::TABLE, function (Blueprint $table) {
+            $table->foreign('user_id')->references('id')->on('users');
         });
     }
 
@@ -27,6 +33,6 @@ class CreateFavoritablesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('favoritables');
+        Schema::dropIfExists(self::TABLE);
     }
 }

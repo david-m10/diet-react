@@ -25,7 +25,6 @@ class ProductsTableSeeder extends Seeder
         return [
             [
                 'producer_id' => null,
-                'category_id' => null,
                 'primitive_id' => null,
 
                 'is_primitive' => true,
@@ -60,7 +59,6 @@ class ProductsTableSeeder extends Seeder
             ],
             [
                 'producer_id' => 2,
-                'category_id' => null,
                 'name' => 'Ryż Basmati Kupiec',
                 'description' => null,
                 'mass_g' => 400,
@@ -75,7 +73,6 @@ class ProductsTableSeeder extends Seeder
             ],
             [
                 'producer_id' => 1,
-                'category_id' => null,
                 'name' => 'Serek Wiejski naturalny Piątnica 200g',
                 'description' => null,
                 'mass_g' => 200,

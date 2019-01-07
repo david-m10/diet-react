@@ -5,6 +5,8 @@ use Illuminate\Database\Migrations\Migration;
 
 class CreateTaggablesTable extends Migration
 {
+    const TABLE = 'taggables';
+
     /**
      * Run the migrations.
      *
@@ -12,11 +14,15 @@ class CreateTaggablesTable extends Migration
      */
     public function up()
     {
-        Schema::create('taggables', function (Blueprint $table) {
+        Schema::create(self::TABLE, function (Blueprint $table) {
             $table->increments('id');
             $table->unsignedInteger('tag_id');
             $table->morphs('taggable');
             $table->timestamps();
+        });
+
+        Schema::table(self::TABLE, function (Blueprint $table) {
+            $table->foreign('tag_id')->references('id')->on('tags');
         });
     }
 
@@ -27,6 +33,6 @@ class CreateTaggablesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('taggables');
+        Schema::dropIfExists(self::TABLE);
     }
 }
