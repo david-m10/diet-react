@@ -11,18 +11,22 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 | Dishes
 |--------------------------------------------------------------------------
 */
-Route::apiResource('dishes', 'DishesController')->except('index');
+Route::apiResource('dishes', 'DishesController')->except(['index', 'show']);
+Route::get('dishes/{id}', 'DishesController@show')
+    ->where('id', '[0-9]+');
 Route::get('dishes/{parserData?}', 'DishesController@index')
-    ->where('parserData', '[a-zA-Z0-9/+_,=,]*');
+    ->where('parserData', '[a-zA-Z0-9_,/=]*');
 
 /*
 |--------------------------------------------------------------------------
 | Products
 |--------------------------------------------------------------------------
 */
-Route::apiResource('products', 'ProductsController')->except('index');
+Route::apiResource('products', 'ProductsController')->except(['index', 'show']);
+Route::get('products/{id}', 'ProductsController@show')
+    ->where('id', '[0-9]+');
 Route::get('products/{parserData?}', 'ProductsController@index')
-    ->where('parserData', '[a-zA-Z0-9/+_,=,]*');
+    ->where('parserData', '[a-zA-Z0-9/_,=,]*');
 
 /*
 |--------------------------------------------------------------------------
