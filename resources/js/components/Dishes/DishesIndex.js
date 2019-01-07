@@ -145,6 +145,12 @@ class DishesIndex extends Component {
                                     <MenuItem
                                         value='sort_by=time_making/sort_type=desc'>Czas robienia malejąco
                                     </MenuItem>
+                                    <MenuItem
+                                        value='sort_by=created_at/sort_type=asc'>Data dodania rosnąco
+                                    </MenuItem>
+                                    <MenuItem
+                                        value='sort_by=created_at/sort_type=desc'>Data dodania malejąco
+                                    </MenuItem>
                                 </Select>
                             </FormControl>
                         </div>
