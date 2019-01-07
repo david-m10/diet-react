@@ -12,21 +12,7 @@ class UsersTableSeeder extends Seeder
      */
     public function run()
     {
-        $now = now();
-        $table = (new User())->getTable();
-
-        foreach ($this->getUsers() as $user) {
-            DB::table($table)->insert([
-                'id' => $user['id'],
-                'name' => $user['name'],
-                'surname' => $user['surname'],
-                'nickname' => $user['nickname'],
-                'email' => $user['email'],
-                'password' => $user['password'],
-                'created_at' => $now,
-                'updated_at' => $now,
-            ]);
-        }
+        (new ModelSeeder(User::class, $this->getUsers()))->run();
     }
 
     /**

@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Products\Producer;
 use Illuminate\Database\Seeder;
 
 class ProducersTableSeeder extends Seeder
@@ -11,16 +12,7 @@ class ProducersTableSeeder extends Seeder
      */
     public function run()
     {
-        $now = now();
-
-        foreach ($this->getProducers() as $producer) {
-            DB::table('producers')->insert([
-                'id' => $producer['id'],
-                'name' => $producer['name'],
-                'created_at' => $now,
-                'updated_at' => $now,
-            ]);
-        }
+        (new ModelSeeder(Producer::class, $this->getProducers(), true))->run();
     }
 
     /**
