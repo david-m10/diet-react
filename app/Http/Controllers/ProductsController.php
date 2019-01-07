@@ -40,9 +40,9 @@ class ProductsController extends ApiController
             }
         }
 
-        $dishes = Dish::take(50)->orderBy($sortBy, $sortType)->get();
+        $products = Product::take(50)->orderBy($sortBy, $sortType)->get();
 
-        return DishResource::collection($dishes);
+        return ProductResource::collection($products);
 
 //        $productsQuery = Product::query();
 //        $productsQuery->orderByDesc('created_at');
