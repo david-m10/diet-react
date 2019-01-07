@@ -30,12 +30,13 @@ export const clearDishes = () => {
 export const fetchDishes = (urlParams) => {
     return dispatch => {
         dispatch(fetchDishesStart());
+
         axios
             .get(`/api${urlParams}`)
             .then(res => {
                 const fetchedDishes = [];
 
-                for (const key of res.data) {
+                for (const key of res.data.data) {
                     fetchedDishes.push({
                         ...key,
                     });

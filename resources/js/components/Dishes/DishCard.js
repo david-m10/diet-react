@@ -48,7 +48,7 @@ function DishCard(props) {
             <CardActionArea>
                 <CardMedia
                     className={props.classes.media}
-                    image={props.image}
+                    image={props.main_image_url}
                     title={props.name}
                 />
                 <CardContent>
@@ -73,7 +73,7 @@ function DishCard(props) {
                     avatar={<Avatar><AccessAlarm/></Avatar>}
                     label={`${props.time_making}min`}
                 />
-                <FavoriteBadge className={props.classes.favorite} count={randomInt()}/>
+                <FavoriteBadge className={props.classes.favorite} count={props.favorites_count}/>
             </CardActions>
         </Card>
     );
@@ -81,12 +81,13 @@ function DishCard(props) {
 
 DishCard.propTypes = {
     name: PropTypes.string.isRequired,
-    description_short: PropTypes.string.isRequired,
-    image: PropTypes.string.isRequired,
-    time_preparation: PropTypes.number.isRequired,
-    time_making: PropTypes.number.isRequired,
-    persons_min: PropTypes.number.isRequired,
-    persons_max: PropTypes.number.isRequired,
+    description_short: PropTypes.string,
+    main_image_url: PropTypes.string,
+    time_preparation: PropTypes.number,
+    time_making: PropTypes.number,
+    persons_min: PropTypes.number,
+    persons_max: PropTypes.number,
+    favorites_count: PropTypes.number,
     classes: PropTypes.object.isRequired
 };
 

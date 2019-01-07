@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Product;
+use App\Http\Resources\ProductResource;
+use App\Models\Products\Product;
+use App\UrlParser;
 use Illuminate\Http\Request;
 
 class ProductsController extends ApiController
@@ -10,17 +12,44 @@ class ProductsController extends ApiController
     /**
      * Display a listing of the resource.
      *
-     * @param Request $request
-     * @return \Illuminate\Http\Response
+     * @param null|string $parserData
+     * @return \Illuminate\Http\Resources\Json\AnonymousResourceCollection
      */
-    public function index(Request $request)
+    public function index(?string $parserData)
     {
-        $productsQuery = Product::query();
-        $productsQuery->orderByDesc('created_at');
+        $parser = new UrlParser($parserData);
 
-        $paginator = $productsQuery->paginate(50, ['*'], 'page', $page = $request->get('page') ?? 1);
+        $sortBy = 'name';
+        $sortType = 'asc';
 
-        $this->respondWithPagination($paginator, []);
+        $availableSortNames = [
+            'id',
+            'name',
+        ];
+        $availableSortTypes = ['asc', 'desc'];
+
+        if ($requestSortBy = $parser->getFirstValue('sort_by')) {
+            if (in_array($sortBy, $availableSortNames)) {
+                $sortBy = $requestSortBy;
+            }
+        }
+
+        if ($requestSortType = $parser->getFirstValue('sort_type')) {
+            if (in_array($sortType, $availableSortTypes)) {
+                $sortType = $requestSortType;
+            }
+        }
+
+        $dishes = Dish::take(50)->orderBy($sortBy, $sortType)->get();
+
+        return DishResource::collection($dishes);
+
+//        $productsQuery = Product::query();
+//        $productsQuery->orderByDesc('created_at');
+//
+//        $paginator = $productsQuery->paginate(50, ['*'], 'page', $page = $request->get('page') ?? 1);
+//
+//        $this->respondWithPagination($paginator, []);
     }
 
     /**
@@ -32,14 +61,25 @@ class ProductsController extends ApiController
     public function store(Request $request)
     {
         $this->validate($request, [
-            'title' => 'required',
-            'description' => 'required',
+            'title' => 'string|required',
+            'description' => 'string',
         ]);
 
         $product = new Product($request->all());
         $product->save();
 
         return $product;
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param Product $dish
+     * @return ProductResource
+     */
+    public function show(Product $dish)
+    {
+        return new ProductResource($dish);
     }
 
     /**

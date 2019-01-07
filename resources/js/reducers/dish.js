@@ -16,7 +16,6 @@ const fetchDishStart = (state) => {
 };
 
 const fetchDishSuccess = (state, action) => {
-    console.log(action);
     return updateObject(state, {
         dish: action.dish,
         loading: false

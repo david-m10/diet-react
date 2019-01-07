@@ -83,7 +83,6 @@ class FiltersLeft extends React.Component {
                             </ExpansionPanelSummary>
                             <ExpansionPanelDetails className={classes.checkboxes}>
                                 {type === 'checkbox' && Array.isArray(items) && items.map((item) => {
-                                    console.log('ItemName', item.name);
                                     return <FormControlLabel
                                         key={item.id}
                                         control={

@@ -62,7 +62,6 @@ class Product extends Model
     use Taggable;
 
     const UNIT_TYPE_QUANTITY = 1;
-    const UNIT_MASS = 1;
 
     const UNIT_G = 1;
     const UNIT_MG = 2;
@@ -76,8 +75,23 @@ class Product extends Model
      * @var array
      */
     protected $fillable = [
+        'is_primitive',
+
         'name',
-        'unit_default',
+        'description_short',
+        'description',
+
+        'mass_g',
+        'energy_kcal',
+        'energy_kj',
+        'fat',
+        'saturates',
+        'saturated_fatty_acids',
+        'carbohydrate',
+        'sugars',
+        'fibre',
+        'protein',
+        'salt',
     ];
 
     /**

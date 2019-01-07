@@ -45,6 +45,8 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Dishes\Dish whereTimePreparation($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Dishes\Dish whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Dishes\Dish whereUserId($value)
+ * @property-read mixed $main_image
+ * @property-read mixed $main_image_url
  */
 class Dish extends Model
 {
@@ -78,8 +80,26 @@ class Dish extends Model
         'is_public' => 'bool',
     ];
 
-    public function getMainImageAttribute()
+    /**
+     * @return array|null
+     */
+    public function getMainImageAttribute():? array
     {
-        return $this->gallery_json;
+        return collect($this->gallery_json)
+            ->where('is_active', true)
+            ->where('is_main', true)
+            ->first();
+    }
+
+    /**
+     * @return null|string
+     */
+    public function getMainImageUrlAttribute():? string
+    {
+        $main = $this->main_image;
+
+        return $main
+            ? url('/images/dishes/' . $this->id . '.' . $main['extension'])
+            : null;
     }
 }
