@@ -8,6 +8,9 @@ use Illuminate\Database\Eloquent\Model;
  * App\Models\Category
  *
  * @mixin \Eloquent
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Products\Category newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Products\Category newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Products\Category query()
  */
 class Category extends Model
 {

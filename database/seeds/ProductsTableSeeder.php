@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Products\Product;
 use Illuminate\Database\Seeder;
 
 class ProductsTableSeeder extends Seeder
@@ -11,15 +12,7 @@ class ProductsTableSeeder extends Seeder
      */
     public function run()
     {
-        $now = now();
-
-        foreach ($this->getProducts() as $product) {
-            DB::table('products')->insert([
-                'name' => $product['name'],
-                'created_at' => $now,
-                'updated_at' => $now,
-            ]);
-        }
+        (new ModelSeeder(Product::class, $this->getProducts()))->run();
     }
 
     /**
@@ -30,6 +23,29 @@ class ProductsTableSeeder extends Seeder
     private function getProducts()
     {
         return [
+            [
+                'producer_id' => null,
+                'category_id' => null,
+                'primitive_id' => null,
+
+                'is_primitive' => true,
+
+                'name' => 'Ryż',
+                'description_short' => null,
+                'description' => null,
+
+                'mass_g' => null,
+                'energy_kcal' => 344,
+                'energy_kj' => 344,
+                'fat' => 0.6,
+                'saturates' => 0.2,
+                'saturated_fatty_acids' => 0.2,
+                'carbohydrate' => 78,
+                'sugars' => 0.2,
+                'fibre' => 2.4,
+                'protein' => 6.5,
+                'salt' => 0.02,
+            ],
             [
                 'name' => 'Jabłko',
             ],
@@ -43,12 +59,11 @@ class ProductsTableSeeder extends Seeder
                 'name' => 'Łosoś',
             ],
             [
-                'id' => 5,
                 'producer_id' => 2,
                 'category_id' => null,
                 'name' => 'Ryż Basmati Kupiec',
                 'description' => null,
-                'mass' => 400,
+                'mass_g' => 400,
                 'energy_kcal' => 344,
                 'fat' => 0.6,
                 'saturates' => 0.2,
@@ -59,12 +74,11 @@ class ProductsTableSeeder extends Seeder
                 'salt' => 0.02,
             ],
             [
-                'id' => 6,
                 'producer_id' => 1,
                 'category_id' => null,
                 'name' => 'Serek Wiejski naturalny Piątnica 200g',
                 'description' => null,
-                'mass' => 200,
+                'mass_g' => 200,
                 'energy_kcal' => 406,
                 'fat' => 5,
                 'saturates' => 3.5,

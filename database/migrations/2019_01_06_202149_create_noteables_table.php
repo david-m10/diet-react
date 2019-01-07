@@ -12,7 +12,7 @@ class CreateNoteablesTable extends Migration
      */
     public function up()
     {
-        Schema::create('taggables', function (Blueprint $table) {
+        Schema::create('noteables', function (Blueprint $table) {
             $table->increments('id');
             $table->unsignedInteger('note_id');
             $table->morphs('noteable');

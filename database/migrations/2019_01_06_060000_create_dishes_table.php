@@ -30,7 +30,7 @@ class CreateDishesTable extends Migration
             $table->text('stages_json')->nullable();
             $table->text('gallery_json')->nullable();
 
-            $table->boolean('is_public');
+            $table->boolean('is_public')->default(false);
 
             $table->timestamps();
         });

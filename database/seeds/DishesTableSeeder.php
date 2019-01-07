@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Dishes\Dish;
 use Illuminate\Database\Seeder;
 
 class DishesTableSeeder extends Seeder
@@ -12,11 +13,12 @@ class DishesTableSeeder extends Seeder
     public function run()
     {
         $now = now();
+        $table = (new Dish())->getTable();
 
         foreach ($this->getDishes() as $dish) {
-
-            DB::table('producers')->insert([
+            DB::table($table)->insert([
                 'id' => $dish['id'],
+                'user_id' => 1,
                 'name' => $dish['name'],
                 'description_short' => $dish['description_short'],
                 'description' => $dish['description'],
@@ -38,7 +40,7 @@ class DishesTableSeeder extends Seeder
      */
     private function getDishes(): array
     {
-        [
+        return [
             [
                 'id' => 1,
                 'name' => 'Tortilla z kurczakiem i warzywami',

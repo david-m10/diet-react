@@ -19,14 +19,13 @@ class CreateProductsTable extends Migration
             $table->unsignedInteger('category_id')->nullable();
             $table->unsignedInteger('primitive_id')->nullable();
 
-            $table->boolean('is_primitive');
+            $table->boolean('is_primitive')->default(false);
 
             $table->string('name');
             $table->text('description_short')->nullable();
             $table->text('description')->nullable();
 
-            $table->decimal('mass')->nullable();
-
+            $table->decimal('mass_g')->nullable();
             $table->decimal('energy_kcal')->nullable();
             $table->decimal('energy_kj')->nullable();
             $table->decimal('fat')->nullable();
