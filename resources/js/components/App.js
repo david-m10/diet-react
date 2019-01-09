@@ -1,11 +1,9 @@
 import React, {Component} from 'react';
-import {Route, Switch} from 'react-router-dom'
+import PropTypes from 'prop-types';
 import {MuiThemeProvider, createMuiTheme} from '@material-ui/core/styles';
 import blueGrey from '@material-ui/core/colors/blueGrey';
-import Header from './Header'
-import DishesIndex from "./Dishes/DishesIndex";
-import DishesCreate from "./Dishes/DishesCreate";
-import DishesShow from "./Dishes/DishesShow";
+import {ConnectedRouter} from 'connected-react-router';
+import routes from '../routes';
 
 const theme = createMuiTheme({
     palette: {
@@ -13,19 +11,18 @@ const theme = createMuiTheme({
     },
 });
 
-export default class App extends Component {
-    render() {
-        return (
-            <div>
-                <MuiThemeProvider theme={theme}>
-                    <Header/>
-                    <Switch>
-                        <Route exact path='/dishes/create' component={DishesCreate}/>
-                        <Route path='/dishes/:id([0-9]+)' component={DishesShow}/>
-                        <Route exact path='/dishes/:urlData([a-zA-Z0-9/+_,=,]+)?' component={DishesIndex}/>
-                    </Switch>
-                </MuiThemeProvider>
-            </div>
-        )
-    }
-}
+const App = ({history}) => {
+    return (
+        <MuiThemeProvider theme={theme}>
+            <ConnectedRouter history={history}>
+                {routes}
+            </ConnectedRouter>
+        </MuiThemeProvider>
+    )
+};
+
+App.propTypes = {
+    history: PropTypes.object,
+};
+
+export default App;

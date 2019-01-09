@@ -1,34 +1,30 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import {BrowserRouter} from 'react-router-dom';
 import {Provider} from 'react-redux';
-import {createStore, applyMiddleware, compose, combineReducers} from 'redux';
-import thunk from 'redux-thunk';
+import configureStore, {history} from './configureStore';
 
 import App from './components/App';
 import registerServiceWorker from './registerServiceWorker';
 
-import dishesReducer from './reducers/dishes';
-import dishReducer from './reducers/dish';
+const store = configureStore();
+const render = () => {
+    ReactDOM.render(
+        <Provider store={store}>
+            <App history={history}/>
+        </Provider>,
+        document.getElementById('root')
+    )
+};
 
-const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+render();
 
-const rootReducer = combineReducers({
-    dishes: dishesReducer,
-    dish: dishReducer,
-});
 
-const store = createStore(rootReducer, composeEnhancers(
-    applyMiddleware(thunk)
-));
+// Hot reloading
+if (module.hot) {
+    // Reload components
+    module.hot.accept('./components/App', () => {
+        render()
+    })
+}
 
-const app = (
-    <Provider store={store}>
-        <BrowserRouter>
-            <App/>
-        </BrowserRouter>
-    </Provider>
-);
-
-ReactDOM.render(app, document.getElementById('root'));
 registerServiceWorker();
