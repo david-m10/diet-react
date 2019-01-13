@@ -163,64 +163,7 @@ class DishesIndex extends Component {
                 </div>
 
                 <div className="middle d-flex">
-                    <FiltersLeft
-                        hidden={this.state.filtersLeftHidden}
-                        data={[
-                            {
-                                'display': 'Nazwa',
-                                'name': 'name',
-                                'type': 'search_with_items',
-                                'items': [
-                                    {
-                                        name: 'name_contain',
-                                        display: 'Zawiera',
-                                    },
-                                    {
-                                        name: 'name_not_contain',
-                                        display: 'Nie zawiera',
-                                    },
-                                ],
-                                'position': 0,
-                            },
-                            {
-                                'display': 'Tagi',
-                                'name': 'tags',
-                                'type': 'search',
-                                'position': 1,
-                            },
-                            {
-                                'display': 'Tagi własne',
-                                'name': 'tags_own',
-                                'type': 'checkbox',
-                                items: [
-                                    {
-                                        id: 1,
-                                        display: 'Kuchnia polska',
-                                    },
-                                    {
-                                        id: 2,
-                                        display: 'Wysoka ilość białka',
-                                    }
-                                ],
-                                'position': 2,
-                            },
-                            {
-                                'display': 'Produkty',
-                                'name': 'products',
-                                'type': 'search',
-                                'position': 3,
-                            },
-                            {
-                                'display': 'Czas przygotowania',
-                                'name': 'time_preparation',
-                                'type': 'range',
-                                'min': 1,
-                                'max': 10,
-                                'position': 4,
-                            },
-                        ]}
-                        cookiePrefix="FiltersDishesIndex"
-                    />
+                    <FiltersLeft url={'dishes'}/>
 
                     <main className={classes.main}>
                         <DishesList key={this.props.location.pathname}/>

@@ -1,4 +1,6 @@
 import React, {Component} from 'react';
+import {compose} from 'redux';
+import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
 import {withStyles} from '@material-ui/core/styles';
 import ExpansionPanel from '@material-ui/core/ExpansionPanel';
@@ -11,6 +13,7 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
 import {withRouter} from 'react-router-dom';
 import TextField from '@material-ui/core/TextField';
+import * as actions from '../actions/index';
 
 const styles = theme => ({
     root: {
@@ -36,17 +39,8 @@ const styles = theme => ({
 });
 
 class FiltersLeft extends Component {
-    constructor(props) {
-        super(props);
-
-        this.state = {
-            collapsed: [],
-            filters: []
-        }
-    }
-
     handleChange = panelName => () => {
-        const newCollapsed = [...this.state.collapsed];
+        const newCollapsed = [...this.props.collapsed];
         const index = newCollapsed.indexOf(panelName);
 
         index > -1
@@ -58,13 +52,9 @@ class FiltersLeft extends Component {
         });
     };
 
-    handleCheckboxChange = (name, value) => (event) => {
-        if (!value.length) {
-            this.props.history.push(`/dishes`);
-            return;
-        }
-
-        this.props.history.push(`/dishes/${event.target.name}=${event.target.value}`);
+    handleCheckboxChange = (name, value) => () => {
+        this.props.updateFilter(name, value);
+// this.props.history.push(`/dishes/${event.target.name}=${event.target.value}`);
     };
 
     handleSearchChange = (name) => (event) => {
@@ -78,18 +68,21 @@ class FiltersLeft extends Component {
         this.props.history.push(`/dishes/${name}=${value}`);
     };
 
+    componentDidMount() {
+        this.props.fetchFilters(this.props.url);
+    }
+
     render() {
-        const {classes, data} = this.props;
-        const {collapsed} = this.state;
+        const {classes, collapsed, filters} = this.props;
 
         return (
-            <div className={[classes.root, (this.props.hidden ? classes.hidden : '')].join(' ')}>
-                {data.map((data) => {
-                    const {display, name, type, items} = data;
+            <div className={[classes.root, (this.props.collapsed ? classes.hidden : '')].join(' ')}>
+                {filters.map((filter) => {
+                    const {display, name, type, items} = filter;
                     return (
                         <ExpansionPanel
                             key={name}
-                            expanded={!collapsed.includes(name)}
+                            expanded={!filter.collapsed}
                             name={name}
                             onChange={this.handleChange(name)}>
                             <ExpansionPanelSummary expandIcon={<ExpandMoreIcon/>}>
@@ -104,7 +97,7 @@ class FiltersLeft extends Component {
                                         key={item.id}
                                         control={
                                             <Checkbox
-                                                checked={this.state[name] && this.state[name][item.id]}
+                                                checked={filter.checked}
                                                 onClick={this.handleCheckboxChange(name, item.id)}
                                                 value={'' + item.id}
                                                 color="primary"
@@ -146,6 +139,28 @@ class FiltersLeft extends Component {
 
 FiltersLeft.propTypes = {
     classes: PropTypes.object.isRequired,
+    url: PropTypes.string.isRequired,
 };
 
-export default withRouter(withStyles(styles)(FiltersLeft));
+const mapStateToProps = state => {
+    return {
+        filters: state.filters.filters,
+        collapsed: state.filters.collapsed,
+        loading: state.filters.loading,
+    };
+};
+
+const mapDispatchToProps = dispatch => {
+    return {
+        fetchFilters: () => dispatch(actions.fetchFilters()),
+        updateFilter: (name, value) => dispatch(actions.updateFilter(name, value)),
+        clearFilter: (name) => dispatch(actions.clearFilter(name)),
+        toggleCollapsedFilter: (name) => dispatch(actions.toggleCollapseFilter(name)),
+    };
+};
+
+export default compose(
+    connect(mapStateToProps, mapDispatchToProps),
+    withRouter,
+    withStyles(styles)
+)(FiltersLeft);
