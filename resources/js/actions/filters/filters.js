@@ -21,17 +21,18 @@ export const fetchFiltersFail = (error) => {
     };
 };
 
-export const emitFiltersChange = () => {
-    return {
-        type: actionTypes.EMIT_FILTERS_CHANGE,
-        error
-    };
+export const changeFilter = (name, value) => {
+    return dispatch => {
+        dispatch(emitFiltersChange());
+        dispatch(updateFilter(name, value));
+    }
 };
 
 export const updateFilter = (name, value) => {
     return {
         type: actionTypes.UPDATE_FILTER,
-        name, value,
+        name,
+        value,
     };
 };
 
@@ -46,6 +47,17 @@ export const clearFilter = (name) => {
     return {
         type: actionTypes.CLEAR_FILTER,
         name,
+    };
+};
+
+export const emitFiltersChange = () => {
+    return {
+        type: actionTypes.EMIT_FILTERS_CHANGE,
+        meta: {
+            debounce: {
+                time: 450
+            }
+        }
     };
 };
 

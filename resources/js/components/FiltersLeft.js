@@ -53,7 +53,7 @@ class FiltersLeft extends Component {
     };
 
     handleCheckboxChange = (name, value) => () => {
-        this.props.updateFilter(name, value);
+        this.props.changeFilter(name, value);
 // this.props.history.push(`/dishes/${event.target.name}=${event.target.value}`);
     };
 
@@ -153,7 +153,7 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
     return {
         fetchFilters: () => dispatch(actions.fetchFilters()),
-        updateFilter: (name, value) => dispatch(actions.updateFilter(name, value)),
+        changeFilter: (name, value) => dispatch(actions.changeFilter(name, value)),
         clearFilter: (name) => dispatch(actions.clearFilter(name)),
         toggleCollapsedFilter: (name) => dispatch(actions.toggleCollapseFilter(name)),
     };

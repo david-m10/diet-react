@@ -1,5 +1,6 @@
 import * as actionTypes from '../../actions/actionTypes';
 import {updateObject} from '../utilities';
+import {changeFilter} from "../../actions/filters/filters";
 
 const initialState = {
     filters: [],
@@ -62,13 +63,11 @@ const updateFilter = (state, action) => {
                 return item;
             }
 
-            // const checked = !item.checked;
-
             return {...item, checked: !item.checked};
         });
     });
 
-    return updateObject(state, {});
+    return updateObject(state, filters);
 };
 
 const reducer = (state = initialState, action) => {
@@ -85,6 +84,8 @@ const reducer = (state = initialState, action) => {
             return toggleCollapseFilter(action);
         case actionTypes.CLEAR_FILTER:
             return clearFilter(action);
+        case actionTypes.CHANGE_FILTER:
+            return changeFilter(action);
         default:
             return state;
     }

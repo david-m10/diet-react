@@ -1,6 +1,6 @@
 export {
     fetchFilters,
-    updateFilter,
+    changeFilter,
     toggleCollapseFilter,
     clearFilter,
 } from './filters/filters';
