@@ -30,10 +30,6 @@ const styles = theme => ({
     }
 });
 
-function randomInt(min = 1, max = 99) {
-    return Math.round(min + Math.random() * (max - min));
-}
-
 function personsLabel(min, max) {
     if (min === max) {
         return min;

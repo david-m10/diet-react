@@ -14,9 +14,11 @@ export default function configureStore(preloadedState) {
         preloadedState,
         composeEnhancer(
             applyMiddleware(
+                createDebounce(),
+
+
                 routerMiddleware(history), // for dispatching history actions
                 thunk,
-                createDebounce(),
             ),
         ),
     );

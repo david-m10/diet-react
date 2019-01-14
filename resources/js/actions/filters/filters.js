@@ -1,5 +1,6 @@
 import * as actionTypes from '../actionTypes';
 import axios from 'axios';
+import {push} from 'connected-react-router';
 
 export const fetchFiltersStart = () => {
     return {
@@ -21,10 +22,12 @@ export const fetchFiltersFail = (error) => {
     };
 };
 
-export const changeFilter = (name, value) => {
-    return dispatch => {
-        dispatch(emitFiltersChange());
+export const changeFilter = (name, value, history) => {
+    return (dispatch) => {
         dispatch(updateFilter(name, value));
+
+        history.push(`/dishes/name_contain=burg`);
+        dispatch(emitFiltersChange(history));
     }
 };
 
@@ -50,16 +53,24 @@ export const clearFilter = (name) => {
     };
 };
 
-export const emitFiltersChange = () => {
-    return {
-        type: actionTypes.EMIT_FILTERS_CHANGE,
-        meta: {
-            debounce: {
-                time: 450
-            }
+function emitFiltersChange(history) {
+    console.log(history);
+
+    const thunk = (dispatch, getState) => {
+        console.log('changing route!');
+        // dispatch(push('/dishes/name_contain=burger'));
+        // history.push(`/dishes/name_contain=burg`);
+    };
+
+    thunk.type = actionTypes.EMIT_FILTERS_CHANGE;
+    thunk.meta = {
+        debounce: {
+            time: 2000,
         }
     };
-};
+
+    return thunk;
+}
 
 export const fetchFilters = () => {
     return dispatch => {

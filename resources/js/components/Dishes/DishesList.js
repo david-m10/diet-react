@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React from 'react';
 import {connect} from 'react-redux';
 import * as actions from '../../actions/index';
 import {createBrowserHistory} from 'history';
@@ -6,7 +6,7 @@ import DishCard from './DishCard';
 import AutoGrid from '../AutoGrid';
 import Measure from 'react-measure';
 
-class DishesList extends Component {
+class DishesList extends React.Component {
     state = {
         dimensions: {
             width: -1,
@@ -15,38 +15,36 @@ class DishesList extends Component {
     };
 
     componentDidMount() {
+        console.log('Dishes list mounted');
         const history = createBrowserHistory();
         this.props.fetchDishes(history.location.pathname);
     }
 
     render() {
-        const width = Math.ceil(this.state.dimensions.width);
+        console.log('Dishes list rendering...');
+        // const width = Math.ceil(this.state.dimensions.width);
 
         return (
-            <Measure
-                bounds
-                onResize={contentRect => {
-                    this.setState({dimensions: contentRect.bounds})
-                }}
-            >
-                {({measureRef}) => (
-                    <div ref={measureRef}>
-                        <div>
-                            {this.props.loading && 'Loading...'}
-                            <AutoGrid
-                                elements={this.props.dishes.map(dish => (
-                                    <DishCard
-                                        key={dish.id}
-                                        {...dish}
-                                    />
-                                ))}
-                                width={width}
-                            />
-                        </div>
-                    </div>
-                )}
-            </Measure>
+            <div>
+                {this.props.loading && 'Loading...'}
+                <AutoGrid
+                    elements={this.props.dishes.map(dish => (
+                        <DishCard
+                            key={dish.id}
+                            {...dish}
+                        />
+                    ))}
+                    width={1200}
+                />
+            </div>
         )
+    }
+
+    componentDidUpdate(prevProps) {
+        if (prevProps.pathname !== this.props.pathname) {
+            console.log(prevProps.pathname, this.props.pathname);
+            this.props.fetchDishes(this.props.pathname);
+        }
     }
 
     componentWillUnmount() {

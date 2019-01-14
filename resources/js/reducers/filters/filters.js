@@ -35,15 +35,12 @@ const clearFilter = (state, action) => {
     const filterName = action.name;
     const filterValue = action.value;
 
-    // console.log({filterName, filterValue, state});
-    //
     const filters = [...state.filters];
     const filter = filters.find((filter) => {
         console.log(filter.name);
         return filter.name === filterName;
     });
 
-    console.log(filter);
     return updateObject(state, {});
 };
 
@@ -53,21 +50,27 @@ const updateFilter = (state, action) => {
 
     // console.log({filterName, filterValue, state});
     //
-    const filters = state.filters.map((filter) => {
-        if (filter.name !== filterName) {
-            return filter;
-        }
+    // const filters = state.filters.map((filter) => {
+    //     if (filter.name !== filterName) {
+    //         return filter;
+    //     }
+    //
+    //     filter.items = filter.items.map((item) => {
+    //         if (item.value !== filterValue) {
+    //             return item;
+    //         }
+    //
+    //         return {...item, checked: !item.checked};
+    //     });
+    // });
 
-        filter.items = filter.items.map((item) => {
-            if (item.value !== filterValue) {
-                return item;
-            }
+    return updateObject(state, {});
+};
 
-            return {...item, checked: !item.checked};
-        });
-    });
+const emitFiltersChange = (state, action) => {
+    const router = action.router;
 
-    return updateObject(state, filters);
+    return updateObject(state, {});
 };
 
 const reducer = (state = initialState, action) => {
@@ -86,6 +89,8 @@ const reducer = (state = initialState, action) => {
             return clearFilter(action);
         case actionTypes.CHANGE_FILTER:
             return changeFilter(action);
+        case actionTypes.EMIT_FILTERS_CHANGE:
+            return emitFiltersChange(state, action);
         default:
             return state;
     }
